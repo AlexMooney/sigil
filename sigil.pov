@@ -2,60 +2,69 @@
 #include "stones.inc"
 
 camera {
-  // location <0, 17000, -9999>
-  // look_at <0, 0, -3000>
-  location <-244, 0, 0>
-  look_at <0, 0, 800>
-  sky <1, 0, 0>
-  rotate <clock, 0, 0>
+  //up        <0, 1, 0>
+  //right     <0, 0, 1.33>
+  right 4/3*x
+  up z
+  direction <0, 1, -0.5>
+  translate <0, -9, 5>
+  // location <0, -2.3, 5>
+  // look_at <0, -2.5, -5>
+
+  // rotate <180*clock, 0, 0>
+  // translate <0, -9 + 12.189*clock, -5 + 5*clock>
+  // fisheye
+  // angle 360
+  //location  <-2.439, 0, 0>
+  //direction <0, 0, 1>
+  //rotate    <180, 0, 0>
 }
 
 light_source {
-  <0, 0, 1000> Gray50
-  shadowless
-}
-
-light_source {
-  <245, 0, 0> Gray50
+  <0, -10+10*clock, 3> White
   fade_distance 200
   fade_power 2
-  shadowless
+  media_attenuation on
 }
 
 // Sigil
 difference {
   torus {
-    245, 75
+    2.45, 0.75
     rotate -90*x
-    pigment { DarkBrown }
-
+    pigment { Green }
+    sturm
   }
-  cylinder {
-    <0, 0, -100>,
-    <0, 0, 100>,
-    245
+  torus {
+    2.44, 0.75
+    rotate -90*x
+    sturm
   }
   pigment { Brown }
-  normal { bumps 0.2 scale 0.1 }
 }
 
 // The Spire
 union {
   cone {
-    <0, 0, -10000>, 5000
-    <0, 0, -8000>, 1000
+    <0, 0, -100>, 50
+    <0, 0, -80>, 10
     texture { T_Stone25 scale 40 }
   }
   cone {
-    <0, 0, -8000>, 1000
-    <0, 0, -6000>, 100
+    <0, 0, -80>, 10
+    <0, 0, -60>, 1
     texture { T_Stone25 scale 40 }
   }
-  cylinder {
-    <0, 0, -7000>
-    <0, 0, -250>
-    100
+  cone {
+    <0, 0, -60>, 1
+    <0, 0, -3>, 0
     texture { T_Stone25 scale 40 }
+  }
+  plane {
+    z, -100
+    pigment { color Gray50 }
+    finish { ambient .3 diffuse .7 }
+    texture { T_Stone25 scale 4 }
   }
 }
 
@@ -89,9 +98,7 @@ sky_sphere {
   }
 }
 
-plane {
-  z, -10000
-  pigment { color Gray50 }
-  finish { ambient .3 diffuse .7 }
-  texture { T_Stone25 scale 4 }
+fog {
+  distance 10
+  color rgb <0.1, 0.1, 0.8>
 }
